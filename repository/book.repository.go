@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -9,8 +10,9 @@ import (
 )
 
 func GetAllBook(c *gin.Context)  {
-	var books []entity.Book	
-	db.DB.Order("updated_at asc").Find(&books)
+	var books [] entity.Book	
+	db.DB.Order("created_at desc").Find(&books)
+	fmt.Println("alamat struck book",&books)
 	c.JSON(http.StatusOK, gin.H{
 		"data" : books, 
 	})
@@ -28,6 +30,7 @@ func  CreateBook(c * gin.Context) {
 		return
 	}
 	db.DB.Create(&books)
+	fmt.Println("alamat struck book",&books)
 	c.JSON(http.StatusOK, gin.H{
 		"message" : "Berhasil menambah buku!",
 		"data": "[]",
